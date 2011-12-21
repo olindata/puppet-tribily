@@ -1,0 +1,11 @@
+puppet-tribily
+
+This is the puppet-tribily module.
+
+This module allows you to easily monitor your servers with tribily server monitoring (available from http://tribily.com)
+
+To add this module, add this module and the puppet-apt module (from https://github.com/Tribily/puppet-apt) to your puppet repository and add "include tribily" to all your nodes. That should do the trick!
+
+Feedback is more then welcome!
+
+The Tribily team (github@tribily.com)

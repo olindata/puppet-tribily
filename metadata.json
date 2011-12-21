@@ -1,0 +1,28 @@
+{
+  "name": "tribily-tribily",
+  "author": "Walter Heck - Tribily.com",
+  "description": "This module allows you to easily monitor your servers with tribily server monitoring (available from http://tribily.com)\n\nTo add this module, add this module and the puppet-apt module (from https://github.com/Tribily/puppet-apt) to your puppet repository and add \"include tribily\" to all your nodes. That should do the trick!\n\nFeedback is more then welcome!\n\nThe Tribily team (github@tribily.com)",
+  "license": "GPL v2",
+  "project_page": "https://github.com/Tribily/puppet-tribily",
+  "source": "https://github.com/Tribily/puppet-tribily",
+  "summary": "Puppet module for the agent for tribily monitoring",
+  "version": "1.0",
+  "checksums": {
+    "Modulefile": "020397f653ee502041121a102dcb19a9",
+    "README": "85361ebdd24af5f85b84bf9129823839",
+    "files/zabbix-agent-init": "85965d64ea7617663b9de0298d5d4da0",
+    "manifests/init.pp": "38e8b8429b18d0b2ca860d8f7f0abc3c",
+    "manifests/params.pp": "4bbca743d505d465067ea6744c3b5af6",
+    "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
+    "spec/spec_helper.rb": "ca19ec4f451ebc7fdb035b52eae6e909",
+    "templates/zabbix_agent.conf.erb": "83fcc22791083ac24ab7f21cd1e30396",
+    "templates/zabbix_agentd.conf.erb": "79a7bc38aef90016eb6b0f5a6925faf4",
+    "tests/init.pp": "a4b52e225a684988442f985d575208ac"
+  },
+  "dependencies": [
+    {
+      "name": "tribily/apt",
+      "versionRequirement": "\u003e\u003d1.0"
+    }
+  ]
+}

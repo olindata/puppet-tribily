@@ -25,13 +25,17 @@ class tribily {
     ensure    => "present",
   }
 
+  user { "zabbix": 
+    ensure    => "present",
+  }
+
   # install the zabbix_agent.conf file
   file { "/etc/zabbix/zabbix_agent.conf":
     ensure  => present,
     mode    => 0644, 
     owner   => 'root', 
     group   => 'root',
-    content => template("zabbix/zabbix_agent.conf.erb"),
+    content => template("tribily/zabbix_agent.conf.erb"),
     require => Package["zabbix-agent"],
   }
   
@@ -41,7 +45,7 @@ class tribily {
     mode    => 0644, 
     owner   => 'root', 
     group   => 'root',
-    content => template("zabbix/zabbix_agentd.conf.erb"),
+    content => template("tribily/zabbix_agentd.conf.erb"),
     require => Package["zabbix-agent"],
   }
 
@@ -50,6 +54,7 @@ class tribily {
     mode    => 0644,
     owner   => zabbix,
     group   => zabbix,    
+    require => User["zabbix"],
   }
   
   file { "/var/log/zabbix-agent":
@@ -65,7 +70,7 @@ class tribily {
     mode    => 0755,
     owner   => 'root',
     group   => 'root',
-    source  => "puppet:///zabbix/zabbix-agent-init",
+    source  => "puppet:///modules/tribily/zabbix-agent-init",
     require => Package["zabbix-agent"]
   }
 

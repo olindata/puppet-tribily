@@ -1,6 +1,6 @@
 class tribily::params {
   
-  # The uri/IP of teh server this agent is reporting to
+  # The uri/IP of the server this agent is reporting to
   #  Default: the tribily backend
   $zabbix_server = $::tribily_zabbix_server ? {
     ''      => 'backend.tribily.com',

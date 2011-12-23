@@ -70,7 +70,7 @@ class tribily {
     mode    => 0755,
     owner   => 'root',
     group   => 'root',
-    source  => "puppet:///modules/tribily/zabbix-agent-init",
+    source  => "puppet:///tribily/zabbix-agent-init",
     require => Package["zabbix-agent"]
   }
 

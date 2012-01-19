@@ -21,4 +21,9 @@ class tribily::params {
     default => $::tribily_conf_dir
   }
   
+  $userparam_conf_dir = $::tribily_userparam_conf_dir ? {
+    ''      => "$conf_dir/conf.d/",
+    default => $::tribily_userparam_conf_dir
+  }
+
 }

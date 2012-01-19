@@ -1,5 +1,5 @@
 name 'tribily-tribily'
-version '1.0'
+version '1.1'
 
 author 'Walter Heck - Tribily.com'
 license 'GPL v2'

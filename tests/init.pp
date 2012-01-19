@@ -1,1 +1,1 @@
-include tribily
+include tribily::agent

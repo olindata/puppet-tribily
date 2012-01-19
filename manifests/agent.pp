@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class tribily {
+class tribily::agent {
   
   include tribily::params
   
@@ -30,7 +30,7 @@ class tribily {
   }
 
   # install the zabbix_agent.conf file
-  file { "/etc/zabbix/zabbix_agent.conf":
+  file { "$tribily::params::conf_dir/zabbix_agent.conf":
     ensure  => present,
     mode    => 0644, 
     owner   => 'root', 
@@ -40,7 +40,7 @@ class tribily {
   }
   
   # install the zabbix_agentd.conf file
-  file { "/etc/zabbix/zabbix_agentd.conf":
+  file { "$tribily::params::conf_dir/zabbix_agentd.conf":
     ensure  => present,
     mode    => 0644, 
     owner   => 'root', 
@@ -81,8 +81,8 @@ class tribily {
     status      => "/etc/init.d/zabbix-agent status",
     hasrestart  => true,
     hasstatus   => false,
-    subscribe   => [  File["/etc/zabbix/zabbix_agent.conf"], 
-                      File["/etc/zabbix/zabbix_agentd.conf"], 
+    subscribe   => [  File["$tribily::params::conf_dir/zabbix_agent.conf"], 
+                      File["$tribily::params::conf_dir/zabbix_agentd.conf"], 
                       File["/etc/init.d/zabbix-agent"]],
     require     => [  Package["zabbix-agent"], 
                       File["/etc/init.d/zabbix-agent"]],

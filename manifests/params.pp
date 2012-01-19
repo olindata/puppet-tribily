@@ -14,4 +14,11 @@ class tribily::params {
     default => $::tribily_host_name
   }
   
+  # The directory the configuration files for zabbix agent are read from
+  #  Default: /etc/zabbix
+  $conf_dir = $::tribily_conf_dir ? {
+    ''      => '/etc/zabbix',
+    default => $::tribily_conf_dir
+  }
+  
 }

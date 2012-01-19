@@ -25,10 +25,6 @@ class tribily::agent {
     ensure    => "present",
   }
 
-  user { "zabbix": 
-    ensure    => "present",
-  }
-
   # install the zabbix_agent.conf file
   file { "$tribily::params::conf_dir/zabbix_agent.conf":
     ensure  => present,
@@ -54,7 +50,7 @@ class tribily::agent {
     mode    => 0644,
     owner   => zabbix,
     group   => zabbix,    
-    require => User["zabbix"],
+    require => User[$tribily::params::agent_user],
   }
   
   file { "/var/log/zabbix-agent":
@@ -62,6 +58,7 @@ class tribily::agent {
     mode    => 0644,
     owner   => zabbix,
     group   => zabbix,    
+    require => User[$tribily::params::agent_user],
   }
 
   # Ensure the correct puppet.conf file is installed

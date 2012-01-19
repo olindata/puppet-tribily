@@ -25,5 +25,11 @@ class tribily::params {
     ''      => "$conf_dir/conf.d",
     default => $::tribily_userparam_conf_dir
   }
+  
+  # The user the agent will run as. Needs to be defined outside this module
+  $agent_user = $::tribily_agent_user ? {
+    ''      => 'zabbix',
+    default => $::tribily_agent_user
+  }
 
 }

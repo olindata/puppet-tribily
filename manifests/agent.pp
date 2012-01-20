@@ -35,6 +35,14 @@ class tribily::agent {
     require => Package["zabbix-agent"],
   }
   
+  file { $tribily::params::conf_dir:
+    ensure  => directory,
+    mode    => 0644,
+    owner   => zabbix,
+    group   => zabbix,    
+    require => User[$tribily::params::agent_user],
+  }
+
   # install the zabbix_agentd.conf file
   file { "$tribily::params::conf_dir/zabbix_agentd.conf":
     ensure  => present,

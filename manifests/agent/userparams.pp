@@ -25,7 +25,10 @@ define tribily::agent::userparams($file_src=undef, $userparams=[]) {
       owner   => $tribily::params::agent_user,
       group   => $tribily::params::agent_user,
       source  => $file_src,
-      require => User[$tribily::params::agent_user],
+      require => [
+        User[$tribily::params::agent_user],
+        File[$tribily::params::userparam_conf_dir],
+      ],
       notify  => Service["zabbix-agent"]
     }
     

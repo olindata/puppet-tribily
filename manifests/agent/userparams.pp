@@ -20,7 +20,7 @@ define tribily::agent::userparams($source=undef, $userparams=[], $content=undef)
       mode    => 0640,
       owner   => $tribily::params::agent_user,
       group   => $tribily::params::agent_user,
-      content  => template($source),
+      source  => $source,
       require => [
         User[$tribily::params::agent_user],
         File[$tribily::params::userparam_conf_dir],

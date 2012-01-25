@@ -35,12 +35,20 @@ class tribily::agent {
     require => Package["zabbix-agent"],
   }
   
+  group {$tribily::params::agent_group:
+  }
+
+  user { $tribily::params::agent_user:
+    gid => $tribily::params::agent_group,
+    require => Group[$tribily::params::agent_group]
+  }
+
   file { $tribily::params::conf_dir:
     ensure  => directory,
     mode    => 0644,
     owner   => $tribily::params::agent_user,
-    group   => $tribily::params::agent_user,    
-    require => User[$tribily::params::agent_user],
+    group   => $tribily::params::agent_group,    
+    require => [ User[$tribily::params::agent_user], Group[$tribily::params::agent_group] ],
   }
 
   # install the zabbix_agentd.conf file
@@ -51,14 +59,6 @@ class tribily::agent {
     group   => 'root',
     content => template("tribily/zabbix_agentd.conf.erb"),
     require => Package["zabbix-agent"],
-  }
-
-  group {$tribily::params::agent_group:
-  }
-
-  user { $tribily::params::agent_user:
-    gid => $tribily::params::agent_group,
-    require => Group[$tribily::params::agent_group]
   }
 
   file { "/var/run/zabbix-agent":

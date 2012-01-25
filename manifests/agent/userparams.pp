@@ -16,7 +16,7 @@ define tribily::agent::userparams($file_src=undef, $userparams=[], username='tri
   if ($file_src == undef) {
 
     # run the userparams through a dummy loop to get them to be created
-    reprepro::repo::dummyloop { $userparams: }
+    tribily::agent::userparams::dummyloop { $userparams: }
     
   } else {
     

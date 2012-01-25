@@ -7,14 +7,14 @@ class tribily::nginx {
     mode    => 0640,
     owner   => $tribily::params::agent_user,
     group   => $tribily::params::agent_user,
-    content => 
-      "nginx.accepts,${nginx_script} accepts
-nginx.handled,${nginx_script} handled
-nginx.requests,${nginx_script} requests
-nginx.connections.active,${nginx_script} active
-nginx.connections.reading,${nginx_script} reading
-nginx.connections.writing,${nginx_script} writing
-nginx.connections.waiting,${nginx_script} waiting",
+    content => "
+UserParameter=nginx.accepts,${nginx_script} accepts
+UserParameter=nginx.handled,${nginx_script} handled
+UserParameter=nginx.requests,${nginx_script} requests
+UserParameter=nginx.connections.active,${nginx_script} active
+UserParameter=nginx.connections.reading,${nginx_script} reading
+UserParameter=nginx.connections.writing,${nginx_script} writing
+UserParameter=nginx.connections.waiting,${nginx_script} waiting",
     require => [
       User[$tribily::params::agent_user],
       File[$tribily::params::userparam_conf_dir],

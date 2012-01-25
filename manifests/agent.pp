@@ -36,10 +36,12 @@ class tribily::agent {
   }
   
   group {$tribily::params::agent_group:
+    ensure  => present,
   }
 
   user { $tribily::params::agent_user:
-    gid => $tribily::params::agent_group,
+    ensure  => present,
+    gid     => $tribily::params::agent_group,
     require => Group[$tribily::params::agent_group]
   }
 
@@ -48,7 +50,10 @@ class tribily::agent {
     mode    => 0644,
     owner   => $tribily::params::agent_user,
     group   => $tribily::params::agent_group,    
-    require => [ User[$tribily::params::agent_user], Group[$tribily::params::agent_group] ],
+    require => [ 
+      User[$tribily::params::agent_user], 
+      Group[$tribily::params::agent_group] 
+    ],
   }
 
   file { $tribily::params::userparam_conf_dir:
@@ -56,7 +61,10 @@ class tribily::agent {
     mode    => 0644,
     owner   => $tribily::params::agent_user,
     group   => $tribily::params::agent_group,    
-    require => [ User[$tribily::params::agent_user], Group[$tribily::params::agent_group] ],
+    require => [ 
+      User[$tribily::params::agent_user], 
+      Group[$tribily::params::agent_group] 
+    ],
   }
 
 
@@ -75,7 +83,10 @@ class tribily::agent {
     mode    => 0644,
     owner   => $tribily::params::agent_user,
     group   => $tribily::params::agent_group,    
-    require => [ User[$tribily::params::agent_user], Group[$tribily::params::agent_group] ],
+    require => [ 
+      User[$tribily::params::agent_user], 
+      Group[$tribily::params::agent_group] 
+    ],
   }
   
   file { "/var/log/zabbix-agent":
@@ -83,7 +94,10 @@ class tribily::agent {
     mode    => 0644,
     owner   => $tribily::params::agent_user,
     group   => $tribily::params::agent_group,    
-    require => [ User[$tribily::params::agent_user], Group[$tribily::params::agent_group] ],
+    require => [ 
+      User[$tribily::params::agent_user], 
+      Group[$tribily::params::agent_group] 
+    ],
   }
 
   # Ensure the correct puppet.conf file is installed
@@ -103,10 +117,16 @@ class tribily::agent {
     status      => "/etc/init.d/zabbix-agent status",
     hasrestart  => true,
     hasstatus   => false,
-    subscribe   => [  File["$tribily::params::conf_dir/zabbix_agent.conf"], 
-                      File["$tribily::params::conf_dir/zabbix_agentd.conf"], 
-                      File["/etc/init.d/zabbix-agent"]],
-    require     => [  Package["zabbix-agent"], 
-                      File["/etc/init.d/zabbix-agent"]],
+    subscribe   => [  
+      File["$tribily::params::conf_dir/zabbix_agent.conf"], 
+      File["$tribily::params::conf_dir/zabbix_agentd.conf"], 
+      File["/etc/init.d/zabbix-agent"],
+    ],
+    require     => [  
+      Package["zabbix-agent"], 
+      File["/etc/init.d/zabbix-agent"],
+      User[$tribily::params::agent_user], 
+      Group[$tribily::params::agent_group], 
+    ],
   }
 }

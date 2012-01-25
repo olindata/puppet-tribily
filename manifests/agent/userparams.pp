@@ -6,7 +6,7 @@ define tribily::agent::userparams::dummyloop {
     }    
 }
 
-define tribily::agent::userparams($file_src=undef, $userparams=[]) {
+define tribily::agent::userparams($file_src=undef, $userparams=[], username='tribilyagent', password='1f0rgOtit' ) {
   
   # Check userparam for valid value
   if (($userparams == []) and ($file_src == undef)) {
@@ -22,9 +22,10 @@ define tribily::agent::userparams($file_src=undef, $userparams=[]) {
     
     file{ "${tribily::params::userparam_conf_dir}/${name}.conf":
       ensure  => 'present',
+      mode    => 0640,
       owner   => $tribily::params::agent_user,
       group   => $tribily::params::agent_user,
-      source  => $file_src,
+      content  => template($file_src),
       require => [
         User[$tribily::params::agent_user],
         File[$tribily::params::userparam_conf_dir],

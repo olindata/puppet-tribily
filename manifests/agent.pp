@@ -38,8 +38,8 @@ class tribily::agent {
   file { $tribily::params::conf_dir:
     ensure  => directory,
     mode    => 0644,
-    owner   => zabbix,
-    group   => zabbix,    
+    owner   => $tribily::params::agent_user,
+    group   => $tribily::params::agent_user,    
     require => User[$tribily::params::agent_user],
   }
 
@@ -53,20 +53,28 @@ class tribily::agent {
     require => Package["zabbix-agent"],
   }
 
+  group {$tribily::params::agent_group:
+  }
+
+  user { $tribily::params::agent_user:
+    gid => $tribily::params::agent_group,
+    require => Group[$tribily::params::agent_group]
+  }
+
   file { "/var/run/zabbix-agent":
     ensure  => directory,
     mode    => 0644,
-    owner   => zabbix,
-    group   => zabbix,    
-    require => User[$tribily::params::agent_user],
+    owner   => $tribily::params::agent_user,
+    group   => $tribily::params::agent_group,    
+    require => [ User[$tribily::params::agent_user], Group[$tribily::params::agent_group] ],
   }
   
   file { "/var/log/zabbix-agent":
     ensure  => directory,
     mode    => 0644,
-    owner   => zabbix,
-    group   => zabbix,    
-    require => User[$tribily::params::agent_user],
+    owner   => $tribily::params::agent_user,
+    group   => $tribily::params::agent_group,    
+    require => [ User[$tribily::params::agent_user], Group[$tribily::params::agent_group] ],
   }
 
   # Ensure the correct puppet.conf file is installed

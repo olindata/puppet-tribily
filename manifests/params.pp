@@ -32,4 +32,8 @@ class tribily::params {
     default => $::tribily_agent_user
   }
 
+  $agent_group = $::tribily_agent_group ? {
+    ''      => 'zabbix',
+    default => $::tribily_agent_group
+  }
 }

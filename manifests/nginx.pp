@@ -22,6 +22,8 @@ nginx.connections.waiting,${nginx_script} waiting",
     notify  => Service["zabbix-agent"]
   }
 
+  package { 'elinks': 
+  }
 
   file { $nginx_script:
     ensure => 'present',

@@ -12,29 +12,29 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class tribily::agent {
-  
+
   include tribily::params
-  
+
   # the version in Debian Lenny is 1.4.7, which is too old and buggy
   if $::lsbdistcodename == 'lenny' {
-    include apt::repo::lenny-backports
+    include apt::repo::lennybackports
   }
-  
-  # install zabbix agent.  This requires that the zabbix package 
-  package { "zabbix-agent": 
+
+  # install zabbix agent.  This requires that the zabbix package
+  package { "zabbix-agent":
     ensure    => "present",
   }
 
   # install the zabbix_agent.conf file
   file { "$tribily::params::conf_dir/zabbix_agent.conf":
     ensure  => present,
-    mode    => 0644, 
-    owner   => 'root', 
+    mode    => 0644,
+    owner   => 'root',
     group   => 'root',
     content => template("tribily/zabbix_agent.conf.erb"),
     require => Package["zabbix-agent"],
   }
-  
+
   group {$tribily::params::agent_group:
     ensure  => present,
   }
@@ -49,10 +49,10 @@ class tribily::agent {
     ensure  => directory,
     mode    => 0644,
     owner   => $tribily::params::agent_user,
-    group   => $tribily::params::agent_group,    
-    require => [ 
-      User[$tribily::params::agent_user], 
-      Group[$tribily::params::agent_group] 
+    group   => $tribily::params::agent_group,
+    require => [
+      User[$tribily::params::agent_user],
+      Group[$tribily::params::agent_group]
     ],
   }
 
@@ -60,10 +60,10 @@ class tribily::agent {
     ensure  => directory,
     mode    => 0644,
     owner   => $tribily::params::agent_user,
-    group   => $tribily::params::agent_group,    
-    require => [ 
-      User[$tribily::params::agent_user], 
-      Group[$tribily::params::agent_group] 
+    group   => $tribily::params::agent_group,
+    require => [
+      User[$tribily::params::agent_user],
+      Group[$tribily::params::agent_group]
     ],
   }
 
@@ -71,8 +71,8 @@ class tribily::agent {
   # install the zabbix_agentd.conf file
   file { "$tribily::params::conf_dir/zabbix_agentd.conf":
     ensure  => present,
-    mode    => 0644, 
-    owner   => 'root', 
+    mode    => 0644,
+    owner   => 'root',
     group   => 'root',
     content => template("tribily/zabbix_agentd.conf.erb"),
     require => Package["zabbix-agent"],
@@ -82,21 +82,21 @@ class tribily::agent {
     ensure  => directory,
     mode    => 0644,
     owner   => $tribily::params::agent_user,
-    group   => $tribily::params::agent_group,    
-    require => [ 
-      User[$tribily::params::agent_user], 
-      Group[$tribily::params::agent_group] 
+    group   => $tribily::params::agent_group,
+    require => [
+      User[$tribily::params::agent_user],
+      Group[$tribily::params::agent_group]
     ],
   }
-  
+
   file { "/var/log/zabbix-agent":
     ensure  => directory,
     mode    => 0644,
     owner   => $tribily::params::agent_user,
-    group   => $tribily::params::agent_group,    
-    require => [ 
-      User[$tribily::params::agent_user], 
-      Group[$tribily::params::agent_group] 
+    group   => $tribily::params::agent_group,
+    require => [
+      User[$tribily::params::agent_user],
+      Group[$tribily::params::agent_group]
     ],
   }
 
@@ -117,16 +117,16 @@ class tribily::agent {
     status      => "/etc/init.d/zabbix-agent status",
     hasrestart  => true,
     hasstatus   => false,
-    subscribe   => [  
-      File["$tribily::params::conf_dir/zabbix_agent.conf"], 
-      File["$tribily::params::conf_dir/zabbix_agentd.conf"], 
+    subscribe   => [
+      File["$tribily::params::conf_dir/zabbix_agent.conf"],
+      File["$tribily::params::conf_dir/zabbix_agentd.conf"],
       File["/etc/init.d/zabbix-agent"],
     ],
-    require     => [  
-      Package["zabbix-agent"], 
+    require     => [
+      Package["zabbix-agent"],
       File["/etc/init.d/zabbix-agent"],
-      User[$tribily::params::agent_user], 
-      Group[$tribily::params::agent_group], 
+      User[$tribily::params::agent_user],
+      Group[$tribily::params::agent_group],
     ],
   }
 }

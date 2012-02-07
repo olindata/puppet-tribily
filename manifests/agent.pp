@@ -15,14 +15,26 @@ class tribily::agent {
 
   include tribily::params
 
-  # the version in Debian Lenny is 1.4.7, which is too old and buggy
-  if $::lsbdistcodename == 'lenny' {
-    include apt::repo::lennybackports
+  if $tribily::params::use_unstable_tribily_repo {
+    include apt::repo::tribilytesting
+    $package_name = 'tribily-agent'
+  } else {
+    if $tribily::params::use_stable_tribily_repo {
+      include apt::repo::tribily
+      $package_name = 'tribily-agent'
+    } else {
+      $package_name = 'zabbix-agent'
+      # the version in Debian Lenny is 1.4.7, which is too old and buggy
+      if $::lsbdistcodename == 'lenny' {
+        include apt::repo::lennybackports
+      }
+    }
   }
 
   # install zabbix agent.  This requires that the zabbix package
   package { "zabbix-agent":
     ensure    => "present",
+    name      => $package_name
   }
 
   # install the zabbix_agent.conf file

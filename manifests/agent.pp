@@ -101,14 +101,14 @@ class tribily::agent {
   }
 
   # Ensure the correct puppet.conf file is installed
-  file { "/etc/init.d/zabbix-agent":
-    ensure  => present,
-    mode    => 0755,
-    owner   => 'root',
-    group   => 'root',
-    source  => "puppet:///tribily/zabbix-agent-init",
-    require => Package["zabbix-agent"]
-  }
+  #file { "/etc/init.d/zabbix-agent":
+  #  ensure  => present,
+  #  mode    => 0755,
+  #  owner   => 'root',
+  #  group   => 'root',
+  #  source  => "puppet:///tribily/zabbix-agent-init",
+  #  require => Package["zabbix-agent"]
+  #}
 
   # ensure that the zabbix-agent is running
   service { "zabbix-agent":
@@ -120,11 +120,11 @@ class tribily::agent {
     subscribe   => [  
       File["$tribily::params::conf_dir/zabbix_agent.conf"], 
       File["$tribily::params::conf_dir/zabbix_agentd.conf"], 
-      File["/etc/init.d/zabbix-agent"],
+      #File["/etc/init.d/zabbix-agent"],
     ],
     require     => [  
       Package["zabbix-agent"], 
-      File["/etc/init.d/zabbix-agent"],
+      #File["/etc/init.d/zabbix-agent"],
       User[$tribily::params::agent_user], 
       Group[$tribily::params::agent_group], 
     ],

@@ -1,10 +1,10 @@
 name 'tribily-tribily'
-version '1.1.1'
+version '1.2.5'
 
 author 'Walter Heck - Tribily.com'
-license 'GPL v2'
+license 'Apache License, Version 2.0'
 project_page 'https://github.com/Tribily/puppet-tribily'
-source 'https://github.com/Tribily/puppet-tribily'
+source 'git://github.com/Tribily/puppet-tribily'
 summary 'Puppet module for the agent for tribily monitoring'
 description 'This module allows you to easily monitor your servers with tribily server monitoring (available from http://tribily.com)
 

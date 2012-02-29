@@ -22,7 +22,8 @@ UserParameter=nginx.connections.waiting,${nginx_script} waiting",
     notify  => Service["zabbix-agent"]
   }
 
-  package { 'elinks': 
+  package { 'curl':
+    ensure => 'present',
   }
 
   file { $nginx_script:

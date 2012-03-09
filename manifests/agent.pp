@@ -11,15 +11,22 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class tribily::agent {
+class tribily::agent(
+  $use_unstable_tribily_repo  = $::tribily::params::use_unstable_tribily_repo,
+  $use_stable_tribily_repo    = $::tribily::params::use_stable_tribily_repo,
+  $confdir                    = $::tribily::params::conf_dir,
+  $agent_group                = $::tribily::params::agent_group,
+  $agent_user                 = $::tribily::params::agent_user,
+  $userparam_conf_dir         = $::tribily::params::userparam_conf_dir
+) {
 
   include tribily::params
 
-  if $tribily::params::use_unstable_tribily_repo {
+  if $use_unstable_tribily_repo {
     include apt::repo::tribilytesting
     $package_name = 'tribily-agent'
   } else {
-    if $tribily::params::use_stable_tribily_repo {
+    if $use_stable_tribily_repo {
       include apt::repo::tribily
       $package_name = 'tribily-agent'
     } else {
@@ -38,7 +45,7 @@ class tribily::agent {
   }
 
   # install the zabbix_agent.conf file
-  file { "$tribily::params::conf_dir/zabbix_agent.conf":
+  file { "${confdir}/zabbix_agent.conf":
     ensure  => present,
     mode    => 0644,
     owner   => 'root',
@@ -47,41 +54,41 @@ class tribily::agent {
     require => Package["zabbix-agent"],
   }
 
-  group {$tribily::params::agent_group:
+  group {$agent_group:
     ensure  => present,
   }
 
-  user { $tribily::params::agent_user:
+  user { $agent_user:
     ensure  => present,
     gid     => $tribily::params::agent_group,
     require => Group[$tribily::params::agent_group]
   }
 
-  file { $tribily::params::conf_dir:
+  file { $confdir:
     ensure  => directory,
     mode    => 0644,
-    owner   => $tribily::params::agent_user,
-    group   => $tribily::params::agent_group,
+    owner   => $agent_user,
+    group   => $agent_group,
     require => [
-      User[$tribily::params::agent_user],
-      Group[$tribily::params::agent_group]
+      User[$agent_user],
+      Group[$agent_group]
     ],
   }
 
-  file { $tribily::params::userparam_conf_dir:
+  file { $userparam_conf_dir:
     ensure  => directory,
     mode    => 0644,
-    owner   => $tribily::params::agent_user,
-    group   => $tribily::params::agent_group,
+    owner   => $agent_user,
+    group   => $agent_group,
     require => [
-      User[$tribily::params::agent_user],
-      Group[$tribily::params::agent_group]
+      User[$agent_user],
+      Group[$agent_group]
     ],
   }
 
 
   # install the zabbix_agentd.conf file
-  file { "$tribily::params::conf_dir/zabbix_agentd.conf":
+  file { "$confdir/zabbix_agentd.conf":
     ensure  => present,
     mode    => 0644,
     owner   => 'root',
@@ -93,22 +100,22 @@ class tribily::agent {
   file { "/var/run/zabbix-agent":
     ensure  => directory,
     mode    => 0644,
-    owner   => $tribily::params::agent_user,
-    group   => $tribily::params::agent_group,
+    owner   => $agent_user,
+    group   => $agent_group,
     require => [
-      User[$tribily::params::agent_user],
-      Group[$tribily::params::agent_group]
+      User[$agent_user],
+      Group[$agent_group]
     ],
   }
 
   file { "/var/log/zabbix-agent":
     ensure  => directory,
     mode    => 0644,
-    owner   => $tribily::params::agent_user,
-    group   => $tribily::params::agent_group,
+    owner   => $agent_user,
+    group   => $agent_group,
     require => [
-      User[$tribily::params::agent_user],
-      Group[$tribily::params::agent_group]
+      User[$agent_user],
+      Group[$agent_group]
     ],
   }
 
@@ -130,15 +137,15 @@ class tribily::agent {
     hasrestart  => true,
     hasstatus   => false,
     subscribe   => [
-      File["$tribily::params::conf_dir/zabbix_agent.conf"],
-      File["$tribily::params::conf_dir/zabbix_agentd.conf"],
+      File["$confdir/zabbix_agent.conf"],
+      File["$confdir/zabbix_agentd.conf"],
       File["/etc/init.d/zabbix-agent"],
     ],
     require     => [
       Package["zabbix-agent"],
       File["/etc/init.d/zabbix-agent"],
-      User[$tribily::params::agent_user],
-      Group[$tribily::params::agent_group],
+      User[$agent_user],
+      Group[$agent_group],
     ],
   }
 }

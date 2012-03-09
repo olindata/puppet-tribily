@@ -12,15 +12,13 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class tribily::agent(
-  $use_unstable_tribily_repo  = $::tribily::params::use_unstable_tribily_repo,
-  $use_stable_tribily_repo    = $::tribily::params::use_stable_tribily_repo,
-  $confdir                    = $::tribily::params::conf_dir,
-  $agent_group                = $::tribily::params::agent_group,
-  $agent_user                 = $::tribily::params::agent_user,
-  $userparam_conf_dir         = $::tribily::params::userparam_conf_dir
-) {
-
-  include tribily::params
+  $use_unstable_tribily_repo  = $tribily::params::use_unstable_tribily_repo,
+  $use_stable_tribily_repo    = $tribily::params::use_stable_tribily_repo,
+  $confdir                    = $tribily::params::conf_dir,
+  $agent_group                = $tribily::params::agent_group,
+  $agent_user                 = $tribily::params::agent_user,
+  $userparam_conf_dir         = $tribily::params::userparam_conf_dir
+) inherits tribily::params {
 
   if $use_unstable_tribily_repo {
     include apt::repo::tribilytesting

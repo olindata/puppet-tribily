@@ -46,4 +46,16 @@ class tribily::params {
     ''      => true,
     default => $::tribily_use_stable_tribily_repo
   }
+
+  ## The credentials to a mysql user that will do monitoring
+  $monitor_mysql_user = $::tribily_monitor_mysql_user ? {
+    ''      => "root",
+    default => $::tribily_monitor_mysql_user,
+  }
+
+  ## The credentials to a mysql user that will do monitoring
+  $monitor_mysql_pass = $::tribily_monitor_mysql_pass ? {
+    ''      => "root",
+    default => $::tribily_monitor_mysql_pass,
+  }
 }

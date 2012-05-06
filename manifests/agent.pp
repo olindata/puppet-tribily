@@ -37,8 +37,8 @@ class tribily::agent(
   }
 
   # install zabbix agent.  This requires that the zabbix package
-  package { "zabbix-agent":
-    ensure    => "present",
+  package { 'zabbix-agent':
+    ensure    => 'present',
     name      => $package_name
   }
 
@@ -48,8 +48,8 @@ class tribily::agent(
     mode    => 0644,
     owner   => 'root',
     group   => 'root',
-    content => template("tribily/zabbix_agent.conf.erb"),
-    require => Package["zabbix-agent"],
+    content => template('tribily/zabbix_agent.conf.erb'),
+    require => Package['zabbix-agent'],
   }
 
   group {$agent_group:
@@ -86,16 +86,16 @@ class tribily::agent(
 
 
   # install the zabbix_agentd.conf file
-  file { "$confdir/zabbix_agentd.conf":
+  file { "${confdir}/zabbix_agentd.conf":
     ensure  => present,
     mode    => 0644,
     owner   => 'root',
     group   => 'root',
-    content => template("tribily/zabbix_agentd.conf.erb"),
-    require => Package["zabbix-agent"],
+    content => template('tribily/zabbix_agentd.conf.erb'),
+    require => Package['zabbix-agent'],
   }
 
-  file { "/var/run/zabbix-agent":
+  file { '/var/run/zabbix-agent':
     ensure  => directory,
     mode    => 0644,
     owner   => $agent_user,
@@ -106,7 +106,7 @@ class tribily::agent(
     ],
   }
 
-  file { "/var/log/zabbix-agent":
+  file { '/var/log/zabbix-agent':
     ensure  => directory,
     mode    => 0644,
     owner   => $agent_user,
@@ -118,30 +118,30 @@ class tribily::agent(
   }
 
   # Ensure the correct puppet.conf file is installed
-  file { "/etc/init.d/zabbix-agent":
+  file { '/etc/init.d/zabbix-agent':
     ensure  => present,
     mode    => 0755,
     owner   => 'root',
     group   => 'root',
-    source  => "puppet:///tribily/zabbix-agent-init",
-    require => Package["zabbix-agent"]
+    source  => 'puppet:///tribily/zabbix-agent-init',
+    require => Package['zabbix-agent']
   }
 
   # ensure that the zabbix-agent is running
-  service { "zabbix-agent":
+  service { 'zabbix-agent':
     ensure      => running,
     enable      => true,
-    status      => "/etc/init.d/zabbix-agent status",
+    status      => '/etc/init.d/zabbix-agent status',
     hasrestart  => true,
     hasstatus   => false,
     subscribe   => [
-      File["$confdir/zabbix_agent.conf"],
-      File["$confdir/zabbix_agentd.conf"],
-      File["/etc/init.d/zabbix-agent"],
+      File["${confdir}/zabbix_agent.conf"],
+      File["${confdir}/zabbix_agentd.conf"],
+      File['/etc/init.d/zabbix-agent'],
     ],
     require     => [
-      Package["zabbix-agent"],
-      File["/etc/init.d/zabbix-agent"],
+      Package['zabbix-agent'],
+      File['/etc/init.d/zabbix-agent'],
       User[$agent_user],
       Group[$agent_group],
     ],

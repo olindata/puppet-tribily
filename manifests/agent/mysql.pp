@@ -1,7 +1,7 @@
 class tribily::agent::mysql {
 
   tribily::agent::userparams{ 'mariadb':
-    content       => template('mariadb/monitoring/tribily.conf'),
+    content       => template('tribily/mysql/tribily.conf'),
   }
 
   file { '/opt/tribily/bin/mysql_repl_status.pl':
@@ -9,7 +9,7 @@ class tribily::agent::mysql {
     owner   => 'root',
     group   => 'zabbix',
     mode    => 510,
-    content => template('mariadb/monitoring/mysql_repl_status.pl.erb'),
+    content => template('tribily/mysql/mysql_repl_status.pl.erb'),
   }
 
   file { '/opt/tribily/bin/mysql_status.pl':
@@ -17,7 +17,7 @@ class tribily::agent::mysql {
     owner   => 'root',
     group   => 'zabbix',
     mode    => 510,
-    content => template('mariadb/monitoring/mysql_status.pl.erb'),
+    content => template('tribily/mysql/mysql_status.pl.erb'),
 
   }
 

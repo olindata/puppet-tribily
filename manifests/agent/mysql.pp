@@ -1,5 +1,8 @@
 class tribily::agent::mysql {
 
+  $monitor_user = $::tribily::params::monitor_mysql_user
+  $monitor_pass = $::tribily::params::monitor_mysql_pass
+
   tribily::agent::userparams{ 'mariadb':
     content       => template('tribily/mysql/tribily.conf'),
   }

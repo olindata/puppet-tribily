@@ -3,7 +3,7 @@ define tribily::agent::userparams::dummyloop {
     augeas { "userparam_${name}":
       context => "/files/${tribily::params::userparam_conf_dir}/zabbix_agentd.conf",
       changes => "set 'UserParam=${name}'",
-      notify  => Service["zabbix-agent"]
+      notify  => Service['zabbix-agent']
     }
 }
 
@@ -13,7 +13,7 @@ define tribily::agent::userparams($source=undef, $userparams=[], $content=undef)
 
   # Check userparam for valid value
   if (($userparams == []) and ($source == undef) and ($content == undef)) {
-    fail "$source, $content and $userparams[] cannot all be empty for tribily::agent::userparam[${name}]"
+    fail "${source}, ${content} and ${userparams}[] cannot all be empty for tribily::agent::userparam[${name}]"
   }
 
   if ($source != undef) {
@@ -27,7 +27,7 @@ define tribily::agent::userparams($source=undef, $userparams=[], $content=undef)
         User[$tribily::params::agent_user],
         File[$tribily::params::userparam_conf_dir],
       ],
-      notify  => Service["zabbix-agent"]
+      notify  => Service['zabbix-agent']
     }
   }
 
@@ -48,7 +48,7 @@ define tribily::agent::userparams($source=undef, $userparams=[], $content=undef)
         User[$tribily::params::agent_user],
         File[$tribily::params::userparam_conf_dir],
       ],
-      notify  => Service["zabbix-agent"]
+      notify  => Service['zabbix-agent']
     }
   }
 }

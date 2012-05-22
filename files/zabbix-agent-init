@@ -23,8 +23,8 @@ PID=/var/run/zabbix-agent/$NAME.pid
 if [ -e $PID ]
 then
 	REGPID=`cat $PID`
+	RUNPID=`ps aux | grep zabbix_agentd | awk '{print $2}' | grep $REGPID`
 fi
-RUNPID=`ps aux | grep zabbix_agentd | awk '{print $2}' | grep $REGPID`
 
 test -f $DAEMON || exit 0
 

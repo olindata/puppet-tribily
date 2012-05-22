@@ -20,7 +20,10 @@ DAEMON=/usr/sbin/zabbix_agentd
 NAME=zabbix_agentd
 DESC="Zabbix agent"
 PID=/var/run/zabbix-agent/$NAME.pid
-REGPID=`cat $PID`
+if [ -e $PID ]
+then
+	REGPID=`cat $PID`
+fi
 RUNPID=`ps aux | grep zabbix_agentd | awk '{print $2}' | grep $REGPID`
 
 test -f $DAEMON || exit 0

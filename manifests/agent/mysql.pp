@@ -26,7 +26,7 @@ class tribily::agent::mysql {
 
 
   database_user{ "${tribily::params::monitor_mysql_user}@localhost":
-    password_hash => $tribily::params::monitor_mysql_pass,
+    password_hash => mysql_password($tribily::params::monitor_mysql_pass),
   }
 
   database_grant{ "${tribily::params::monitor_mysql_user}@localhost/*":

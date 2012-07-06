@@ -24,14 +24,14 @@ class tribily::agent::mysql {
 
   }
 
-#TODO: implement properly when stored configs and exported resources are working
-#  @@database_user{ "${tribily::params::monitor_mysql_user}@localhost":
-#    password_hash => $tribily::params::monitor_mysql_pass,
-#  }
-#
-#  @@database_grant{ "${tribily::params::monitor_mysql_user}@localhost/*":
-#    privileges    => repl_client_priv
-#  }
+
+  database_user{ "${tribily::params::monitor_mysql_user}@localhost":
+    password_hash => $tribily::params::monitor_mysql_pass,
+  }
+
+  database_grant{ "${tribily::params::monitor_mysql_user}@localhost/*":
+    privileges    => repl_client_priv
+  }
 
 
 }

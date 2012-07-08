@@ -21,9 +21,11 @@ class tribily::agent::mysql {
     group   => 'zabbix',
     mode    => 510,
     content => template('tribily/mysql/mysql_status.pl.erb'),
-
   }
 
+  package { 'libdbd-mysql-perl':
+    ensure => latest
+  }
 
   database_user{ "${tribily::params::monitor_mysql_user}@localhost":
     password_hash => mysql_password($tribily::params::monitor_mysql_pass),

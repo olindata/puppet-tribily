@@ -16,7 +16,7 @@ function zsend {
   <%= zabbixsender %> -c $ZABBIX_CONF -k $1 -o $2
 }
 
-<%= logtail %> -f$MAILLOG -o$DAT1 | $PFLOGSUMM -h 0 -u 0 --no_bounce_detail --no_deferral_detail --no_reject_detail --no_no_msg_size --no_smtpd_warnings > $DAT2 
+<%= logtail %> -f$MAILLOG -o$DAT1 | $PFLOGSUMM -h 0 -u 0 --no_no_msg_size <%= pflogsumm_params %> > $DAT2 
 
 zsend pfreceived `grep -m 1 received $DAT2|cut -f1 -d"r"`
 zsend pfdelivered `grep -m 1 delivered $DAT2|cut -f1 -d"d"`

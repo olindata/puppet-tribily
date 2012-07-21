@@ -7,6 +7,18 @@ class tribily::agent::postfix(
   $zabbixagentlog = '/var/log/zabbix-agent'
 ) {
 
+  case $::lsbdistcodename {
+    'lenny': {
+      $pflogsumm_params = '--no_bounce_detail --no_deferral_detail --no_reject_detail --no_smtpd_warnings '
+    }
+    'squeeze': {
+      $pflogsumm_params = 'bounce_detail=0 deferral_detail=0 reject_detail=0 smtpd_warning_detail=0 '
+    }
+    default: {
+      err "tribily::agent::postfix is not implemented for  ${::lsbdistcodename}"
+    }
+  }
+
   package { 'logtail':
     ensure => installed
   }

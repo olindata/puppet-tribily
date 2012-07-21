@@ -22,7 +22,7 @@ class tribily::params {
   }
 
   $userparam_conf_dir = $::tribily_userparam_conf_dir ? {
-    ''      => "$conf_dir/conf.d",
+    ''      => "${conf_dir}/conf.d",
     default => $::tribily_userparam_conf_dir
   }
 
@@ -49,13 +49,13 @@ class tribily::params {
 
   ## The credentials to a mysql user that will do monitoring
   $monitor_mysql_user = $::tribily_monitor_mysql_user ? {
-    ''      => "root",
+    ''      => 'root',
     default => $::tribily_monitor_mysql_user,
   }
 
   ## The credentials to a mysql user that will do monitoring
   $monitor_mysql_pass = $::tribily_monitor_mysql_pass ? {
-    ''      => "root",
+    ''      => 'root',
     default => $::tribily_monitor_mysql_pass,
   }
 }

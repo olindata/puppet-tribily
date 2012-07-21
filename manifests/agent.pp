@@ -117,6 +117,23 @@ class tribily::agent(
     ],
   }
 
+  file { '/opt/tribily':
+    ensure  => 'directory',
+    recurse => true,
+    owner   => 'root',
+    group   => 'root',
+    mode    => 0655,
+  }
+
+  file { '/opt/tribily/bin':
+    ensure  => 'directory',
+    recurse => true,
+    owner   => 'root',
+    group   => 'root',
+    require => File['/opt/tribily'],
+    mode    => 0655,
+  }
+
   # Ensure the correct puppet.conf file is installed
   file { '/etc/init.d/zabbix-agent':
     ensure  => present,

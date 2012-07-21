@@ -12,7 +12,7 @@ class tribily::agent::mysql {
     owner   => 'root',
     group   => 'zabbix',
     require => File['/opt/tribily/bin'],
-    mode    => 510,
+    mode    => 550,
     content => template('tribily/mysql/mysql_repl_status.pl.erb'),
   }
 
@@ -21,7 +21,7 @@ class tribily::agent::mysql {
     owner   => 'root',
     group   => 'zabbix',
     require => File['/opt/tribily/bin'],
-    mode    => 510,
+    mode    => 550,
     content => template('tribily/mysql/mysql_status.pl.erb'),
   }
 
@@ -34,8 +34,10 @@ class tribily::agent::mysql {
     require       => Package['mysql-server']
   }
 
+  # WH 20120722 this won't work until the mysql module implements global level
+  # privileges
   database_grant{ "${tribily::params::monitor_mysql_user}@localhost/*":
-    privileges    => [repl_client_priv, super_priv],
+    privileges    => [Repl_client_priv, Super_priv],
     require       => Package['mysql-server']
   }
 

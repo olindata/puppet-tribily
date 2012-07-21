@@ -12,7 +12,7 @@ DAT2=$(mktemp)
 PFLOGSUMM=<%= pflogsumm %>
 ZABBIX_CONF=<%= zabbixconf %>
 
-function zsend { 
+zsend() { 
   <%= zabbixsender %> -c $ZABBIX_CONF -k $1 -o $2
 }
 

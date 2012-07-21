@@ -1,5 +1,9 @@
 class tribily::agent::nginx {
 
+  package { 'elinks':
+    ensure => present
+  }
+
   tribily::agent::userparams{ 'nginx':
     content       => template('tribily/nginx/nginx_userparams.conf.erb'),
   }

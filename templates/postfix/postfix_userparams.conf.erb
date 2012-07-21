@@ -1,0 +1,2 @@
+# For Postfix
+UserParameter=pfmailq,mailq | grep -v "Mail queue is empty" | grep -c '^[0-9A-Z]'

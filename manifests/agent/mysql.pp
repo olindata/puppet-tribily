@@ -36,7 +36,7 @@ class tribily::agent::mysql {
 
   # WH 20120722 this won't work until the mysql module implements global level
   # privileges
-  database_grant{ "${tribily::params::monitor_mysql_user}@localhost/*":
+  database_grant{ "${tribily::params::monitor_mysql_user}@localhost":
     privileges    => [Repl_client_priv, Super_priv],
     require       => Package['mysql-server']
   }

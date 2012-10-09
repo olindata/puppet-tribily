@@ -21,17 +21,17 @@ class tribily::agent(
 ) inherits tribily::params {
 
   if $use_unstable_tribily_repo {
-    include apt::repo::tribilytesting
+    include s_apt::tribilytesting
     $package_name = 'tribily-agent'
   } else {
     if $use_stable_tribily_repo {
-      include apt::repo::tribily
+      include s_apt::tribily
       $package_name = 'tribily-agent'
     } else {
       $package_name = 'zabbix-agent'
       # the version in Debian Lenny is 1.4.7, which is too old and buggy
       if $::lsbdistcodename == 'lenny' {
-        include apt::repo::lennybackports
+        include s_apt::lennybackports
       }
     }
   }
